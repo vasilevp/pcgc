@@ -59,23 +59,16 @@ type Client interface {
 	CreateFirstUser(user User, whitelistIP string) (CreateFirstUserResponse, error)
 	// https://docs.opsmanager.mongodb.com/master/reference/api/groups/get-all-groups-for-current-user/
 	GetAllProjects() (ProjectsResponse, error)
-
-	// Method contracts: will be implemented later
-
 	// https://docs.opsmanager.mongodb.com/master/reference/api/groups/create-one-group/
-	CreateOneProject(name string, orgID string) (interface{}, error)
-
-	// https://docs.opsmanager.mongodb.com/master/reference/api/agentapikeys/create-one-agent-api-key/
-	CreateAgentAPIKEY(projectID string, name string) (interface{}, error)
-
+	CreateOneProject(name string, orgID string) (CreateOneProjectResponse, error)
 	// https://docs.opsmanager.mongodb.com/master/reference/api/automation-config/#get-the-automation-configuration
-	GetAutomationConfig(projectID string) (interface{}, error)
-
-	// https://docs.opsmanager.mongodb.com/current/reference/api/hosts/get-all-hosts-in-group/
-	GetAllHostsInProject(projectID string, pageNum int, itemsPerPage int) (interface{}, error)
-
+	GetAutomationConfig(projectID string) (AutomationConfig, error)
+	// https://docs.opsmanager.mongodb.com/master/reference/api/agents-get-by-type/
+	GetAgentsByType(projectID string, agentType string) (GetAgentsByTypeResponse, error)
 	// https://docs.opsmanager.mongodb.com/master/reference/api/automation-config/#update-the-automation-configuration
-	UpdateAutomationConfig(projectID string, body io.Reader) (interface{}, error)
+	UpdateDeployments(projectID string, body io.Reader) (map[string]interface{}, error)
+	// https://docs.opsmanager.mongodb.com/master/reference/api/agentapikeys/create-one-agent-api-key/
+	CreateAgentAPIKEY(projectID string, desc string) (CreateAgentAPIKEYResponse, error)
 }
 
 // NewClient builds a new API client for connecting to Ops Manager
