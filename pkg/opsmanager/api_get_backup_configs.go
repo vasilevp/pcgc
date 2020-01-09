@@ -28,12 +28,13 @@ type BackupConfigs struct {
 	TotalCount    int            `json:"totalCount"`
 }
 
-// BackupResult is backup result))
+// BackupResult response structure
 type BackupResult struct {
 	AuthMechanismName  string   `json:"authMechanismName"`
 	ClusterID          string   `json:"clusterId"`
 	EncryptionEnabled  bool     `json:"encryptionEnabled"`
 	ExcludedNamespaces []string `json:"excludedNamespaces"`
+	IncludedNamespaces []string `json:"includednamespaces"`
 	GroupID            string   `json:"groupId"`
 	Links              []Link   `json:"links"`
 	SSLEnabled         bool     `json:"sslEnabled"`
