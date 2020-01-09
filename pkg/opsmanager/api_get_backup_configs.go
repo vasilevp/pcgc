@@ -30,17 +30,17 @@ type BackupConfigs struct {
 
 // BackupResult response structure
 type BackupResult struct {
-	AuthMechanismName  string   `json:"authMechanismName"`
-	ClusterID          string   `json:"clusterId"`
-	EncryptionEnabled  bool     `json:"encryptionEnabled"`
-	ExcludedNamespaces []string `json:"excludedNamespaces"`
-	IncludedNamespaces []string `json:"includednamespaces"`
-	GroupID            string   `json:"groupId"`
-	Links              []Link   `json:"links"`
-	SSLEnabled         bool     `json:"sslEnabled"`
-	StatusName         string   `json:"statusName"`
-	StorageEngineName  string   `json:"storageEngineName"`
-	Username           string   `json:"username"`
+	AuthMechanismName  string   `json:"authMechanismName,omitempty"`
+	ClusterID          string   `json:"clusterId,omitempty"`
+	EncryptionEnabled  bool     `json:"encryptionEnabled,omitempty"`
+	ExcludedNamespaces []string `json:"excludedNamespaces,omitempty"`
+	IncludedNamespaces []string `json:"includednamespaces,omitempty"`
+	GroupID            string   `json:"groupId,omitempty"`
+	Links              []Link   `json:"links,omitempty"`
+	SSLEnabled         bool     `json:"sslEnabled,omitempty"`
+	StatusName         string   `json:"statusName,omitempty"`
+	StorageEngineName  string   `json:"storageEngineName,omitempty"`
+	Username           string   `json:"username,omitempty"`
 }
 
 // GetBackupConfigs
