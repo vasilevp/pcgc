@@ -28,12 +28,11 @@ import (
 )
 
 const (
-	// Version for client
-	Version = "0.1"
-	// DefaultBaseURL API default base URL
-	DefaultBaseURL = "https://cloud.mongodb.com/api/public/v1.0/"
-	// DefaultUserAgent To be submitted by the client
-	DefaultUserAgent = "pcgc/" + Version + " (" + runtime.GOOS + "; " + runtime.GOARCH + ")"
+	Version          = "0.1" // Version for client
+	CloudURL         = "https://cloud.mongodb.com"
+	DefaultBaseURL   = CloudURL + APIPublicV1Path                                            // DefaultBaseURL API default base URL for cloud manager
+	APIPublicV1Path  = "/api/public/v1.0/"                                                   // DefaultAPIPath default root path for all API endpoints
+	DefaultUserAgent = "pcgc/" + Version + " (" + runtime.GOOS + "; " + runtime.GOARCH + ")" // DefaultUserAgent To be submitted by the client
 	mediaType        = "application/json"
 )
 
@@ -43,7 +42,10 @@ type Client struct {
 	BaseURL   *url.URL
 	UserAgent string
 
-	Projects ProjectsService
+	Organizations    OrganizationsService
+	Projects         ProjectsService
+	AutomationConfig AutomationService
+	UnauthUsers      UnauthUsersService
 
 	onRequestCompleted RequestCompletionCallback
 }
@@ -51,7 +53,7 @@ type Client struct {
 // RequestCompletionCallback defines the type of the request callback function
 type RequestCompletionCallback func(*http.Request, *http.Response)
 
-// NewClient returns a new MongoDBAtlas API Client
+// NewClient returns a new Cloud Manager API Client
 func NewClient(httpClient *http.Client) *Client {
 	if httpClient == nil {
 		httpClient = http.DefaultClient
@@ -59,9 +61,16 @@ func NewClient(httpClient *http.Client) *Client {
 
 	baseURL, _ := url.Parse(DefaultBaseURL)
 
-	c := &Client{client: httpClient, BaseURL: baseURL, UserAgent: DefaultUserAgent}
+	c := &Client{
+		client:    httpClient,
+		BaseURL:   baseURL,
+		UserAgent: DefaultUserAgent,
+	}
 
+	c.Organizations = &OrganizationsServiceOp{client: c}
 	c.Projects = &ProjectsServiceOp{client: c}
+	c.AutomationConfig = &AutomationServiceOp{client: c}
+	c.UnauthUsers = &UnauthUsersServiceOp{client: c}
 
 	return c
 }
